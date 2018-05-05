@@ -65,13 +65,10 @@ namespace Task7.BLL.Services
 		{
 			var sb = new StringBuilder();
 
-			var m = MatrixInstance.GetLength(0);
-			var n = MatrixInstance.GetLength(1);
-
-			for (var i = 0; i < m; i++)
+			for (var i = 0; i < M; i++)
 			{
 				
-				for (var j = 0; j < n; j++)
+				for (var j = 0; j < N; j++)
 				{
 					sb.Append($"{MatrixInstance[i, j],-15:f2}");
 				}
