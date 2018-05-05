@@ -15,15 +15,8 @@ namespace Task7.BLL.Services
 
 		public Matrix(double[,] arr)
 		{
-			if (arr != null)
-			{
-				MatrixInstance = arr;
-			}
-			else
-			{
-				throw new ArgumentException
-					("Argguments can not be == null");
-			}
+			MatrixInstance = arr ?? throw new ArgumentException
+			("Argguments can not be == null");
 		}
 
 		public Matrix(int m, int n)
