@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Task7.BLL.Services
@@ -9,6 +10,13 @@ namespace Task7.BLL.Services
 
 		public int M => MatrixInstance.GetLength(0); 
 		public int N => MatrixInstance.GetLength(1);
+
+		private static readonly Func<double, double, double> Sum
+			= (a, b) => a + b;
+		private static readonly Func<double, double, double> Sub
+			= (a, b) => a - b;
+		private static readonly Func<double, double, double> Mult
+			= (a, b) => a * b;
 
 		public Matrix(double[,] arr)
 		{
@@ -60,31 +68,31 @@ namespace Task7.BLL.Services
 		}
 
 		public static Matrix operator +(Matrix matrix, double num) =>
-			Operate(matrix, num, (a, b) => a + b);
+			Operate(matrix, num, Sum);
 
 		public static Matrix operator +(double num, Matrix matrix) =>
-			Operate(matrix, num, (a, b) => a + b);
+			Operate(matrix, num, Sum);
 
 		public static Matrix operator +(Matrix matrixA, Matrix matrixB) =>
-			Operate(matrixA, matrixB, (a, b) => a + b);
+			Operate(matrixA, matrixB, Sum);
 
 		public static Matrix operator -(Matrix matrix, double num) =>
-			Operate(matrix, num, (a, b) => a - b);
+			Operate(matrix, num, Sub);
 
 		public static Matrix operator -(double num, Matrix matrix) =>
-			Operate(matrix, num, (a, b) => a - b);
+			Operate(matrix, num, Sub);
 
 		public static Matrix operator -(Matrix matrixA, Matrix matrixB) =>
-			Operate(matrixA, matrixB, (a, b) => a - b);
+			Operate(matrixA, matrixB, Sub);
 
 		public static Matrix operator *(Matrix matrix, double num) =>
-			Operate(matrix, num, (a, b) => a * b);
+			Operate(matrix, num, Mult);
 
 		public static Matrix operator *(double num, Matrix matrix) =>
-			Operate(matrix, num, (a, b) => a * b);
+			Operate(matrix, num, Mult);
 
 		public static Matrix operator *(Matrix matrixA, Matrix matrixB) =>
-			Operate(matrixA, matrixB, (a, b) => a * b);
+			Operate(matrixA, matrixB, Mult);
 
 		private static Matrix Operate(Matrix matrix, double num,
 			Func<double, double, double> retFunc)
