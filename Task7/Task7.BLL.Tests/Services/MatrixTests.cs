@@ -10,7 +10,7 @@ namespace Task7.BLL.Tests.Services
 		[Test]
 		public void Constructor_m_n()
 		{
-			var matrix = new Matrix(3, 5);
+			var matrix = new Matrix(3, 5, true);
 
 			Assert.Multiple(() =>
 			{
@@ -24,7 +24,7 @@ namespace Task7.BLL.Tests.Services
 
 		public void Constructor_m_n_LessOrEqualThen_0()
 		{
-			var matrix = new Matrix(3, 0);
+			var matrix = new Matrix(3, 0, true);
 		}
 
 		[Test]
@@ -40,6 +40,40 @@ namespace Task7.BLL.Tests.Services
 		public void Constructor_arr_IsEqualNull()
 		{
 			var matrix = new Matrix(null);
+		}
+
+		[Test]
+		public void TestMatrixEquality()
+		{
+		}
+
+		[Test]
+		public void OperatorSum()
+		{
+			var matrix1 = new Matrix(3, 3, true);
+
+			var testNum = 1;
+
+			var matrixResult = matrix1 + testNum;
+
+			for (var i = 0; i < matrixResult.M; i++)
+			{
+				for (var j = 0; j < matrixResult.N; j++)
+				{
+					Assert.AreEqual(matrixResult.MatrixInstance[i, j], matrix1.MatrixInstance[i, j] + testNum);
+				}
+			}
+
+			//step 2	
+
+			matrixResult = testNum + matrix1;
+			for (var i = 0; i < matrixResult.M; i++)
+			{
+				for (var j = 0; j < matrixResult.N; j++)
+				{
+					Assert.AreEqual(matrixResult.MatrixInstance[i, j], matrix1.MatrixInstance[i, j] + testNum);
+				}
+			}
 		}
 	}
 }

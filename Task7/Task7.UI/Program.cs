@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Task7.BLL.Services;
 using Exception = System.Exception;
 
@@ -12,7 +8,7 @@ namespace Task7.UI
 	{
 		static void Main(string[] args)
 		{
-			var matrix = new Matrix(3, 5);
+			var matrix = new Matrix(3, 5, true);
 
 			Console.WriteLine(matrix);
 
@@ -23,15 +19,9 @@ namespace Task7.UI
 
 			Console.WriteLine(matrix2);
 
-			Console.ReadKey();
-			try
-			{
+			Console.WriteLine(matrix2 + 1);
 
-			}
-			catch (Exception e)
-			{
-				
-			}
+			Console.ReadKey();
 		}
 	}
 }

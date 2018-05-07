@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Task7.BLL.Services
 {
-	public class Matrix
+	public class Matrix 
 	{
 		public double[,] MatrixInstance { get; private set; }
 
@@ -16,18 +13,26 @@ namespace Task7.BLL.Services
 		public Matrix(double[,] arr)
 		{
 			MatrixInstance = arr ?? throw new ArgumentException
-			("Argguments can not be == null");
+			("Arggument cannot be null", $"arr");
 		}
 
-		public Matrix(int m, int n)
+		public Matrix(int m, int n, bool initMatrixRandom)
 		{
 			if (m <= 0 || n <= 0)
 			{
 				throw new ArgumentException
-					("Argguments can not be <= 0");
+					("Argguments can not be <= 0", $"m or n");
 			}
 
-			InitMatrix(m, n);
+			switch (initMatrixRandom)
+			{
+				case false:
+					MatrixInstance = new double[m, n];
+					break;
+				case true:
+					InitMatrix(m, n);
+					break;
+			}
 		}
 
 
@@ -52,6 +57,101 @@ namespace Task7.BLL.Services
 					                       (max - min) + min;
 				}
 			}
+		}
+
+		public static Matrix operator +(Matrix matrix, double num) =>
+			Operate(matrix, num, (a, b) => a + b);
+
+		public static Matrix operator +(double num, Matrix matrix) =>
+			Operate(matrix, num, (a, b) => a + b);
+
+		public static Matrix operator +(Matrix matrixA, Matrix matrixB) =>
+			Operate(matrixA, matrixB, (a, b) => a + b);
+
+		public static Matrix operator -(Matrix matrix, double num) =>
+			Operate(matrix, num, (a, b) => a - b);
+
+		public static Matrix operator -(double num, Matrix matrix) =>
+			Operate(matrix, num, (a, b) => a - b);
+
+		public static Matrix operator -(Matrix matrixA, Matrix matrixB) =>
+			Operate(matrixA, matrixB, (a, b) => a - b);
+
+		public static Matrix operator *(Matrix matrix, double num) =>
+			Operate(matrix, num, (a, b) => a * b);
+
+		public static Matrix operator *(double num, Matrix matrix) =>
+			Operate(matrix, num, (a, b) => a * b);
+
+		public static Matrix operator *(Matrix matrixA, Matrix matrixB) =>
+			Operate(matrixA, matrixB, (a, b) => a * b);
+
+		private static Matrix Operate(Matrix matrix, double num,
+			Func<double, double, double> retFunc)
+		{
+			var res = new Matrix(matrix.M, matrix.N, false);
+
+			for (var i = 0; i < matrix.M; i++)
+			{
+				for (var j = 0; j < matrix.N; j++)
+				{
+					res.MatrixInstance[i, j] =
+						retFunc(matrix.MatrixInstance[i, j], num);
+				}
+			}
+
+			return res;
+		}
+
+		private static Matrix Operate(Matrix matrixA, Matrix matrixB,
+			Func<double, double, double> retFunc)
+		{
+			if (!MatrixEqualitySize(matrixA, matrixB))
+			{
+				throw new Exception();
+			}
+
+			var m = matrixA.M;
+			var n = matrixA.N;
+
+			var res = new Matrix(m, n, false);
+
+			for (var i = 0; i < m; i++)
+			{
+				for (var j = 0; j < n; j++)
+				{
+					res.MatrixInstance[i, j] =
+						retFunc(matrixA.MatrixInstance[i, j],
+							matrixB.MatrixInstance[i, j]);
+				}
+			}
+
+			return res;
+		}
+
+		private static bool MatrixEqualitySize(Matrix a, Matrix b) =>
+			a.M == b.M && a.N == b.N;
+
+		public static bool MatrixEqualityElements(Matrix a, Matrix b)
+		{
+			if (!MatrixEqualitySize(a, b))
+			{
+				throw new Exception();
+			}
+
+			for (var i = 0; i < a.M; i++)
+			{
+				for (var j = 0; j < a.N; j++)
+				{
+					if (a.MatrixInstance[i, j] !=
+					    b.MatrixInstance[i, j])
+					{
+						return false;
+					}
+				}
+			}
+
+			return true;
 		}
 
 		public override string ToString()
