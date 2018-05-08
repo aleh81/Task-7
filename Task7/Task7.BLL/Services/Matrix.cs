@@ -116,30 +116,27 @@ namespace Task7.BLL.Services
 			}
 		}
 
-		private static Matrix Operate(Matrix matrix, double num,
+		private static Matrix CycleMatrixAndNum(Matrix matrix, double num,
 			Func<double, double, double> retFunc)
 		{
-			CorrectnessArgumentsOperate(matrix, num);
 
 			var res = new Matrix(matrix.M, matrix.N, false);
 
-				for (var i = 0; i < matrix.M; i++)
+			for (var i = 0; i < matrix.M; i++)
+			{
+				for (var j = 0; j < matrix.N; j++)
 				{
-					for (var j = 0; j < matrix.N; j++)
-					{
-						res.MatrixInstance[i, j] =
-							retFunc(matrix.MatrixInstance[i, j], num);
-					}
+					res.MatrixInstance[i, j] =
+						retFunc(matrix.MatrixInstance[i, j], num);
 				}
+			}
 
 			return res;
 		}
 
-		private static Matrix Operate(Matrix matrixA, Matrix matrixB,
+		private static Matrix CycleMatrixAndNum(Matrix matrixA, Matrix matrixB,
 			Func<double, double, double> retFunc)
 		{
-			CorrectnessArgumentsOperate(matrixA, matrixB);
-
 			var m = matrixA.M;
 			var n = matrixA.N;
 
@@ -156,6 +153,22 @@ namespace Task7.BLL.Services
 			}
 
 			return res;
+		}
+
+		private static Matrix Operate(Matrix matrix, double num,
+			Func<double, double, double> retFunc)
+		{
+			CorrectnessArgumentsOperate(matrix, num);
+
+			return CycleMatrixAndNum(matrix, num, retFunc);
+		}
+
+		private static Matrix Operate(Matrix matrixA, Matrix matrixB,
+			Func<double, double, double> retFunc)
+		{
+			CorrectnessArgumentsOperate(matrixA, matrixB);
+
+			return CycleMatrixAndNum(matrixA, matrixB, retFunc);
 		}
 
 		private static bool MatrixEqualitySize(Matrix a, Matrix b) =>
