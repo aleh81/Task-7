@@ -88,8 +88,7 @@ namespace Task7.BLL.Services
 		public static Matrix operator *(Matrix matrixA, Matrix matrixB) =>
 			Operate(matrixA, matrixB, Mult);
 
-		private static Matrix Operate(Matrix matrix, double num,
-			Func<double, double, double> retFunc)
+		private static void CorrectnessArgumentsOperate(Matrix matrix, double num)
 		{
 			if (matrix == null)
 			{
@@ -102,6 +101,25 @@ namespace Task7.BLL.Services
 				throw new ArgumentException
 					("Argument num in Operate method cannot be <= 0");
 			}
+		}
+
+		private static void CorrectnessArgumentsOperate(Matrix matrixA, Matrix matrixB)
+		{
+			if (matrixA == null || matrixB == null)
+			{
+				throw new NullReferenceException
+					("Object Matrix in Method Operate(Matrix, MAtrix) is null");
+			}
+			if (!MatrixEqualitySize(matrixA, matrixB))
+			{
+				throw new ArgumentException("matrixA != matrixB");
+			}
+		}
+
+		private static Matrix Operate(Matrix matrix, double num,
+			Func<double, double, double> retFunc)
+		{
+			CorrectnessArgumentsOperate(matrix, num);
 
 			var res = new Matrix(matrix.M, matrix.N, false);
 
@@ -120,15 +138,7 @@ namespace Task7.BLL.Services
 		private static Matrix Operate(Matrix matrixA, Matrix matrixB,
 			Func<double, double, double> retFunc)
 		{
-			if (matrixA == null || matrixB == null)
-			{
-				throw new NullReferenceException
-					("Object Matrix in Method Operate(Matrix, MAtrix) is null");
-			}
-			if (!MatrixEqualitySize(matrixA, matrixB))
-			{
-				throw new Exception();
-			}
+			CorrectnessArgumentsOperate(matrixA, matrixB);
 
 			var m = matrixA.M;
 			var n = matrixA.N;

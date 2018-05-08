@@ -43,35 +43,36 @@ namespace Task7.BLL.Tests.Services
 		}
 
 		[Test]
-		public void TestMatrixEquality()
-		{
-		}
-
-		[Test]
-		public void OperatorSum()
+		public void OperatorMatrixSumDouble()
 		{
 			var matrix1 = new Matrix(3, 3, true);
 
-			var testNum = 1;
+			var valueArgument = 1;
 
-			var matrixResult = matrix1 + testNum;
+			var matrixResult = matrix1 + valueArgument;
 
 			for (var i = 0; i < matrixResult.M; i++)
 			{
 				for (var j = 0; j < matrixResult.N; j++)
 				{
-					Assert.AreEqual(matrixResult.MatrixInstance[i, j], matrix1.MatrixInstance[i, j] + testNum);
+					Assert.AreEqual(matrixResult.MatrixInstance[i, j], matrix1.MatrixInstance[i, j] + valueArgument);
 				}
 			}
+		}
 
-			//step 2	
+		[Test]
+		public void OperatorDoubleSumMatrix()
+		{
+			var matrix1 = new Matrix(3, 3, true);
 
-			matrixResult = testNum + matrix1;
+			var valueArgument = 1;
+
+			var matrixResult = valueArgument + matrix1;
 			for (var i = 0; i < matrixResult.M; i++)
 			{
 				for (var j = 0; j < matrixResult.N; j++)
 				{
-					Assert.AreEqual(matrixResult.MatrixInstance[i, j], matrix1.MatrixInstance[i, j] + testNum);
+					Assert.AreEqual(matrixResult.MatrixInstance[i, j], matrix1.MatrixInstance[i, j] + valueArgument);
 				}
 			}
 		}
