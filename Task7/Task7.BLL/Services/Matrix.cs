@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Task7.BLL.Services
@@ -26,12 +25,6 @@ namespace Task7.BLL.Services
 
 		public Matrix(int m, int n, bool initMatrixRandom)
 		{
-			if (m <= 0 || n <= 0)
-			{
-				throw new ArgumentException
-					("Argguments can not be <= 0", $"m or n");
-			}
-
 			switch (initMatrixRandom)
 			{
 				case false:
@@ -46,9 +39,10 @@ namespace Task7.BLL.Services
 
 		private void InitMatrix(int m, int n)
 		{
-			if (m <= 0 && n <= 0)
+			if (m <= 0 || n <= 0)
 			{
-				throw new Exception();
+				throw new ArgumentException
+					("Argguments can not be <= 0", $"m or n");
 			}
 
 			MatrixInstance = new double[m, n];
@@ -97,16 +91,28 @@ namespace Task7.BLL.Services
 		private static Matrix Operate(Matrix matrix, double num,
 			Func<double, double, double> retFunc)
 		{
+			if (matrix == null)
+			{
+				throw new NullReferenceException
+					("Object Matrix in Method Operate(Matrix, Double) is null");
+			}
+
+			if (num <= 0)
+			{
+				throw new ArgumentException
+					("Argument num in Operate method cannot be <= 0");
+			}
+
 			var res = new Matrix(matrix.M, matrix.N, false);
 
-			for (var i = 0; i < matrix.M; i++)
-			{
-				for (var j = 0; j < matrix.N; j++)
+				for (var i = 0; i < matrix.M; i++)
 				{
-					res.MatrixInstance[i, j] =
-						retFunc(matrix.MatrixInstance[i, j], num);
+					for (var j = 0; j < matrix.N; j++)
+					{
+						res.MatrixInstance[i, j] =
+							retFunc(matrix.MatrixInstance[i, j], num);
+					}
 				}
-			}
 
 			return res;
 		}
@@ -114,6 +120,11 @@ namespace Task7.BLL.Services
 		private static Matrix Operate(Matrix matrixA, Matrix matrixB,
 			Func<double, double, double> retFunc)
 		{
+			if (matrixA == null || matrixB == null)
+			{
+				throw new NullReferenceException
+					("Object Matrix in Method Operate(Matrix, MAtrix) is null");
+			}
 			if (!MatrixEqualitySize(matrixA, matrixB))
 			{
 				throw new Exception();
