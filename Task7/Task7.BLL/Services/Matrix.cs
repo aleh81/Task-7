@@ -116,7 +116,7 @@ namespace Task7.BLL.Services
 			}
 		}
 
-		private static Matrix CycleMatrixAndNum(Matrix matrix, double num,
+		private static Matrix Cycle(Matrix matrix, double num,
 			Func<double, double, double> retFunc)
 		{
 
@@ -134,7 +134,7 @@ namespace Task7.BLL.Services
 			return res;
 		}
 
-		private static Matrix CycleMatrixAndNum(Matrix matrixA, Matrix matrixB,
+		private static Matrix Cycle(Matrix matrixA, Matrix matrixB,
 			Func<double, double, double> retFunc)
 		{
 			var m = matrixA.M;
@@ -160,7 +160,7 @@ namespace Task7.BLL.Services
 		{
 			CorrectnessArgumentsOperate(matrix, num);
 
-			return CycleMatrixAndNum(matrix, num, retFunc);
+			return Cycle(matrix, num, retFunc);
 		}
 
 		private static Matrix Operate(Matrix matrixA, Matrix matrixB,
@@ -168,7 +168,7 @@ namespace Task7.BLL.Services
 		{
 			CorrectnessArgumentsOperate(matrixA, matrixB);
 
-			return CycleMatrixAndNum(matrixA, matrixB, retFunc);
+			return Cycle(matrixA, matrixB, retFunc);
 		}
 
 		private static bool MatrixEqualitySize(Matrix a, Matrix b) =>
